@@ -6,6 +6,12 @@
     <string name="productDetailsDescription">Description:</string>
     <string name="productDetailsPrice">Price:</string>
     <string name="productDetailsReviews">Reviews:</string>
+
     <string name="backButton">Back</string>
+
+    <string name="reviewComment">Comment:</string>
+    <string name="reviewDate">Date:</string>
+    <string name="reviewRating">Rating</string>
+    <string name="reviewUsername">By:</string>
     <string name="a"></string>
 </resources>

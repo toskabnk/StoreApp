@@ -7,6 +7,12 @@
     <string name="productDetailsDescription">Descripcion:</string>
     <string name="productDetailsPrice">Precio:</string>
     <string name="productDetailsReviews">Reseñas:</string>
+
     <string name="backButton">Volver</string>
+
+    <string name="reviewComment">Comentario:</string>
+    <string name="reviewDate">Fecha:</string>
+    <string name="reviewRating">Rating</string>
+    <string name="reviewUsername">By:</string>
     <string name="a"></string>
 </resources>

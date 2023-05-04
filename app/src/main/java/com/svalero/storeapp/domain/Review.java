@@ -8,9 +8,9 @@ public class Review {
     private Product productReview;
     private float rating;
     private String comment;
-    private LocalDate date;
+    private String date;
 
-    public Review(long id, Person customerReview, Product productReview, float rating, String comment, LocalDate date) {
+    public Review(long id, Person customerReview, Product productReview, float rating, String comment, String date) {
         this.id = id;
         this.customerReview = customerReview;
         this.productReview = productReview;
@@ -59,11 +59,11 @@ public class Review {
         this.comment = comment;
     }
 
-    public LocalDate getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(LocalDate date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
