@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">StoreApp</string>
+    <string name="productDetails">Detalles</string>
+    <string name="productEdit">Editar</string>
+    <string name="productDelete">Eliminar</string>
+    <string name="a"></string>
+</resources>

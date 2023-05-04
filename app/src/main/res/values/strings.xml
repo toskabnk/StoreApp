@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">StoreApp</string>
+    <string name="productDetails">Details</string>
+    <string name="productEdit">Edit</string>
+    <string name="productDelete">Delete</string>
+    <string name="a"></string>
+</resources>
