@@ -1,6 +1,6 @@
 package com.svalero.storeapp.api;
 
-import static com.svalero.storeapp.api.Constants.BASE_URL;
+import static com.svalero.storeapp.util.Constants.BASE_URL;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;

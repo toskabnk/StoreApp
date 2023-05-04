@@ -1,7 +1,9 @@
 package com.svalero.storeapp.api;
 
+import com.svalero.storeapp.domain.PersonLogin;
 import com.svalero.storeapp.domain.Product;
 import com.svalero.storeapp.domain.Review;
+import com.svalero.storeapp.domain.Token;
 
 import java.util.List;
 
@@ -50,4 +52,7 @@ public interface AmazonAAApiInterface {
 
     @DELETE("reviews/{id}")
     Call<Void> deleteReview(@Path("id") long id);
+
+    @POST("token")
+    Call<Token> getToken(@Body PersonLogin personLogin);
 }

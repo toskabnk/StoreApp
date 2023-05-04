@@ -6,12 +6,20 @@
     <string name="productDetailsDescription">Description:</string>
     <string name="productDetailsPrice">Price:</string>
     <string name="productDetailsReviews">Reviews:</string>
-
+    <string name="loginUsername">Username:</string>
+    <string name="loginPassword">Password:</string>
+    <string name="loginForgot">Forgot password</string>
+    <string name="loginButton">Login</string>
     <string name="backButton">Back</string>
+    <string name="loginMenu">Login</string>
+    <string name="confirmationMessage">Are you sure?</string>
+    <string name="confirmationYes">Yes</string>
+    <string name="confirmationNo">No</string>
+    <string name="logoutMessage">Logging out</string>
 
     <string name="reviewComment">Comment:</string>
     <string name="reviewDate">Date:</string>
-    <string name="reviewRating">Rating</string>
+    <string name="reviewRating">Rating:</string>
     <string name="reviewUsername">By:</string>
     <string name="a"></string>
 </resources>
