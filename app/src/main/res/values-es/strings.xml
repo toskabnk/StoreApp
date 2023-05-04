@@ -4,5 +4,9 @@
     <string name="productDetails">Detalles</string>
     <string name="productEdit">Editar</string>
     <string name="productDelete">Eliminar</string>
+    <string name="productDetailsDescription">Descripcion:</string>
+    <string name="productDetailsPrice">Precio:</string>
+    <string name="productDetailsReviews">Reseñas:</string>
+    <string name="backButton">Volver</string>
     <string name="a"></string>
 </resources>

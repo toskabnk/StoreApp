@@ -3,14 +3,14 @@ package com.svalero.storeapp.domain;
 public class Product {
     private long id;
     private String name;
-    private String descprition;
+    private String description;
     private float price;
     private String category;
 
-    public Product(long id, String name, String descprition, float price, String category) {
+    public Product(long id, String name, String description, float price, String category) {
         this.id = id;
         this.name = name;
-        this.descprition = descprition;
+        this.description = description;
         this.price = price;
         this.category = category;
     }
@@ -31,12 +31,12 @@ public class Product {
         this.name = name;
     }
 
-    public String getDescprition() {
-        return descprition;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDescprition(String descprition) {
-        this.descprition = descprition;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public float getPrice() {
@@ -60,7 +60,7 @@ public class Product {
         return "Product{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", descprition='" + descprition + '\'' +
+                ", descprition='" + description + '\'' +
                 ", price=" + price +
                 ", category='" + category + '\'' +
                 '}';

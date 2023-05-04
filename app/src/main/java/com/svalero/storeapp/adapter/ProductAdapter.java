@@ -1,6 +1,7 @@
 package com.svalero.storeapp.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.svalero.storeapp.R;
 import com.svalero.storeapp.domain.Product;
+import com.svalero.storeapp.view.ProductDetailsView;
 
 import java.util.List;
 
@@ -63,6 +65,15 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Superher
             productEdit = view.findViewById(R.id.bListEdit);
             productDelete = view.findViewById(R.id.bListDelete);
             imageView = view.findViewById(R.id.ivListDetailsImage);
+
+            productDetails.setOnClickListener(v -> seeProductDetails(getAdapterPosition()));
         }
+    }
+
+    private void seeProductDetails(int adapterPosition) {
+        Product product = productList.get(adapterPosition);
+        Intent intent = new Intent(context, ProductDetailsView.class);
+        intent.putExtra("productId", product.getId());
+        context.startActivity(intent);
     }
 }

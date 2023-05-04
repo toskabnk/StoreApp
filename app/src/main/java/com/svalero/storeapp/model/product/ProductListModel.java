@@ -1,10 +1,10 @@
-package com.svalero.storeapp.model;
+package com.svalero.storeapp.model.product;
 
 import android.util.Log;
 
 import com.svalero.storeapp.api.AmazonAAApi;
 import com.svalero.storeapp.api.AmazonAAApiInterface;
-import com.svalero.storeapp.contract.ProductListContract;
+import com.svalero.storeapp.contract.product.ProductListContract;
 import com.svalero.storeapp.domain.Product;
 
 import java.util.List;
@@ -36,20 +36,5 @@ public class ProductListModel implements ProductListContract.Model {
                 listener.onLoadProductsError(t.getMessage());
             }
         });
-    }
-
-    @Override
-    public List<Product> loadProductsByName(String name) {
-        return null;
-    }
-
-    @Override
-    public Product editProduct(long id, Product editedProduct) {
-        return null;
-    }
-
-    @Override
-    public boolean deleteProduct(long id) {
-        return false;
     }
 }

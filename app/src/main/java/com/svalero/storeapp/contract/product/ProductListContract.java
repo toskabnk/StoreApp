@@ -1,4 +1,4 @@
-package com.svalero.storeapp.contract;
+package com.svalero.storeapp.contract.product;
 
 import com.svalero.storeapp.domain.Product;
 
@@ -11,9 +11,6 @@ public interface ProductListContract {
             void onLoadProductsError(String message);
         }
         void loadAllProducts(OnLoadProductListener listener);
-        List<Product> loadProductsByName(String name);
-        Product editProduct(long id, Product editedProduct);
-        boolean deleteProduct(long id);
     }
 
     interface View{
@@ -23,8 +20,5 @@ public interface ProductListContract {
 
     interface Presenter {
         void loadAllProducts();
-        void loadProductsByName(String name);
-        void editProduct(long id, Product editedProduct);
-        void deleteProduct(long id);
     }
 }

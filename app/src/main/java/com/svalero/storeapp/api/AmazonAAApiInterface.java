@@ -1,6 +1,7 @@
 package com.svalero.storeapp.api;
 
 import com.svalero.storeapp.domain.Product;
+import com.svalero.storeapp.domain.Review;
 
 import java.util.List;
 
@@ -11,6 +12,7 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface AmazonAAApiInterface {
     //Products
@@ -32,16 +34,19 @@ public interface AmazonAAApiInterface {
 
     //Reviews
     @GET("reviews")
-    Call<List<Product>> getReviews();
+    Call<List<Review>> getReviews();
 
     @GET("reviews/{id}")
-    Call<Product> getReview(@Path("id") long id);
+    Call<Review> getReview(@Path("id") long id);
+
+    @GET("reviews/")
+    Call<List<Review>> getReviewsByProduct(@Query("productId") long id);
 
     @POST("reviews")
-    Call<Product> addReview(@Body Product product);
+    Call<Review> addReview(@Body Review review);
 
     @PUT("reviews/{id}")
-    Call<Product> editReview(@Path("id")long id, @Body Product product);
+    Call<Review> editReview(@Path("id")long id, @Body Review review);
 
     @DELETE("reviews/{id}")
     Call<Void> deleteReview(@Path("id") long id);

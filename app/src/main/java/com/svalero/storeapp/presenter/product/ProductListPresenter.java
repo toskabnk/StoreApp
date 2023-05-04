@@ -1,8 +1,8 @@
-package com.svalero.storeapp.presenter;
+package com.svalero.storeapp.presenter.product;
 
-import com.svalero.storeapp.contract.ProductListContract;
+import com.svalero.storeapp.contract.product.ProductListContract;
 import com.svalero.storeapp.domain.Product;
-import com.svalero.storeapp.model.ProductListModel;
+import com.svalero.storeapp.model.product.ProductListModel;
 
 import java.util.List;
 
@@ -18,21 +18,6 @@ public class ProductListPresenter implements ProductListContract.Presenter, Prod
     @Override
     public void loadAllProducts() {
         model.loadAllProducts(this);
-    }
-
-    @Override
-    public void loadProductsByName(String name) {
-
-    }
-
-    @Override
-    public void editProduct(long id, Product editedProduct) {
-
-    }
-
-    @Override
-    public void deleteProduct(long id) {
-
     }
 
     @Override

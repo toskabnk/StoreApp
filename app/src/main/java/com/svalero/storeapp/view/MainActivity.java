@@ -9,9 +9,9 @@ import android.widget.Toast;
 
 import com.svalero.storeapp.R;
 import com.svalero.storeapp.adapter.ProductAdapter;
-import com.svalero.storeapp.contract.ProductListContract;
+import com.svalero.storeapp.contract.product.ProductListContract;
 import com.svalero.storeapp.domain.Product;
-import com.svalero.storeapp.presenter.ProductListPresenter;
+import com.svalero.storeapp.presenter.product.ProductListPresenter;
 
 import java.util.ArrayList;
 import java.util.List;

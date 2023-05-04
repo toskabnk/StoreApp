@@ -3,5 +3,9 @@
     <string name="productDetails">Details</string>
     <string name="productEdit">Edit</string>
     <string name="productDelete">Delete</string>
+    <string name="productDetailsDescription">Description:</string>
+    <string name="productDetailsPrice">Price:</string>
+    <string name="productDetailsReviews">Reviews:</string>
+    <string name="backButton">Back</string>
     <string name="a"></string>
 </resources>
