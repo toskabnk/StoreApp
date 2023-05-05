@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity implements ProductListContra
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
-        adapter = new ProductAdapter(this, productList, intentFrom);
+        adapter = new ProductAdapter(this, productList, intentFrom, persistData.getToken());
         recyclerView.setAdapter(adapter);
     }
 
