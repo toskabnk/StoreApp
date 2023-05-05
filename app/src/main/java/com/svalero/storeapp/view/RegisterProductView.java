@@ -10,22 +10,32 @@ import android.database.sqlite.SQLiteConstraintException;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import com.svalero.storeapp.R;
+import com.svalero.storeapp.contract.product.EditProductContract;
 import com.svalero.storeapp.contract.product.RegisterProductContract;
 import com.svalero.storeapp.db.StoreAppDatabase;
 import com.svalero.storeapp.domain.PersistData;
 import com.svalero.storeapp.domain.Product;
+import com.svalero.storeapp.presenter.product.EditProductPresenter;
 import com.svalero.storeapp.presenter.product.RegisterProductPresenter;
 
-public class RegisterProductView extends AppCompatActivity implements RegisterProductContract.View {
+public class RegisterProductView extends AppCompatActivity implements RegisterProductContract.View, EditProductContract.View {
 
-    private RegisterProductPresenter presenter;
+    private EditText etName;
+    private EditText etDescription;
+    private EditText etPrice;
+    private EditText etCategory;
+    private Button button;
+    private RegisterProductPresenter registerProductPresenter;
+    private EditProductPresenter editProductPresenter;
     private PersistData persistData;
     String username;
+    Product productEdit;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,14 +52,30 @@ public class RegisterProductView extends AppCompatActivity implements RegisterPr
             db.close();
         }
 
+        etName = findViewById(R.id.registerProductName);
+        etDescription = findViewById(R.id.registerProductDescription);
+        etPrice = findViewById(R.id.registerProductPrice);
+        etCategory = findViewById(R.id.registerProductCategory);
+        button = findViewById(R.id.registerProductRegister);
+
         Intent intentFrom = getIntent();
         username = intentFrom.getStringExtra("username");
-        Log.i("RegisterProductView" , "onCreate - " + username);
+        productEdit = (Product) intentFrom.getSerializableExtra("editProduct");
+        Log.i("RegisterProductView" , "onCreate - Intent Username: " + username);
+        Log.i("RegisterProductView", "onCreate - Intent Product: " + productEdit);
         if(username == null){
             username = "";
         }
 
-        presenter = new RegisterProductPresenter(this);
+        if(productEdit != null){
+            etName.setText(productEdit.getName());
+            etCategory.setText(productEdit.getCategory());
+            etDescription.setText(productEdit.getDescription());
+            etPrice.setText(String.valueOf(productEdit.getPrice()));
+            button.setText(R.string.editButton);
+        }
+        registerProductPresenter = new RegisterProductPresenter(this);
+        editProductPresenter = new EditProductPresenter(this);
     }
 
 
@@ -70,17 +96,17 @@ public class RegisterProductView extends AppCompatActivity implements RegisterPr
     }
 
     public void register(View view){
-        EditText etName = findViewById(R.id.registerProductName);
-        EditText etDescription = findViewById(R.id.registerProductDescription);
-        EditText etPrice = findViewById(R.id.registerProductPrice);
-        EditText etCategory = findViewById(R.id.registerProductCategory);
-
         String name = etName.getText().toString();
         String description = etDescription.getText().toString();
         String category = etCategory.getText().toString();
         float price = Float.parseFloat(etPrice.getText().toString());
 
-        Product product = new Product(name, description, price, category);
-        presenter.registerProduct(product, persistData.getToken());
+        if(productEdit != null){
+            Product product = new Product(productEdit.getId(), name, description, price, category);
+            editProductPresenter.editProduct(product, persistData.getToken());
+        } else {
+            Product product = new Product(name, description, price, category);
+            registerProductPresenter.registerProduct(product, persistData.getToken());
+        }
     }
 }

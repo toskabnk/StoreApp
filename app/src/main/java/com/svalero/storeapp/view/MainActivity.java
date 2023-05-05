@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements ProductListContra
         setUpPreferences(db);
 
         presenter = new ProductListPresenter(this);
-        initializeRecyclerView();
+        initializeRecyclerView(intentFrom);
     }
 
     private void setUpPreferences(StoreAppDatabase db) {
@@ -113,14 +113,14 @@ public class MainActivity extends AppCompatActivity implements ProductListContra
         return false;
     }
 
-    private void initializeRecyclerView(){
+    private void initializeRecyclerView(Intent intentFrom){
         productList = new ArrayList<>();
 
         RecyclerView recyclerView = findViewById(R.id.rvListProducts);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
-        adapter = new ProductAdapter(this, productList);
+        adapter = new ProductAdapter(this, productList, intentFrom);
         recyclerView.setAdapter(adapter);
     }
 

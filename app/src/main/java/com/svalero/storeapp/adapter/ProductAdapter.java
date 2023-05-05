@@ -2,6 +2,7 @@ package com.svalero.storeapp.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,17 +15,20 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.svalero.storeapp.R;
 import com.svalero.storeapp.domain.Product;
 import com.svalero.storeapp.view.ProductDetailsView;
+import com.svalero.storeapp.view.RegisterProductView;
 
 import java.util.List;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.SuperheroHolder>{
     private Context context;
     private List<Product> productList;
+    Intent intentFrom;
     //private View snackBarView;
 
-    public ProductAdapter(Context context, List<Product> productList){
+    public ProductAdapter(Context context, List<Product> productList, Intent intentFrom){
         this.context = context;
         this.productList = productList;
+        this.intentFrom = intentFrom;
     }
 
     public Context getContext() {
@@ -67,6 +71,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Superher
             imageView = view.findViewById(R.id.ivListDetailsImage);
 
             productDetails.setOnClickListener(v -> seeProductDetails(getAdapterPosition()));
+            productEdit.setOnClickListener(v -> editProduct(getAdapterPosition()));
         }
     }
 
@@ -75,5 +80,19 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Superher
         Intent intent = new Intent(context, ProductDetailsView.class);
         intent.putExtra("productId", product.getId());
         context.startActivity(intent);
+    }
+
+    private void editProduct(int adapterPosition){
+        Product product = productList.get(adapterPosition);
+        Intent intent = new Intent(context, RegisterProductView.class);
+        String username = intentFrom.getStringExtra("username");
+        Log.i("ProductAdapter" , "editProduct - " + username);
+        if(username == null){
+            username = "";
+        }
+        intent.putExtra("username", username);
+        intent.putExtra("editProduct", product);
+        context.startActivity(intent);
+
     }
 }
