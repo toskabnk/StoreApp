@@ -8,4 +8,7 @@
     <item
         android:id="@+id/menuLogout"
         android:title="Desconectar" />
+    <item
+        android:id="@+id/menuAddProduct"
+        android:title="Añadir" />
 </menu>

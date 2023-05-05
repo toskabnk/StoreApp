@@ -15,6 +15,13 @@ public class Product {
         this.category = category;
     }
 
+    public Product(String name, String description, float price, String category) {
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.category = category;
+    }
+
     public long getId() {
         return id;
     }

@@ -80,8 +80,10 @@ public class MainActivity extends AppCompatActivity implements ProductListContra
             menu.findItem(R.id.userMenu).setTitle(username);
             menu.findItem(R.id.menuLogin).setVisible(false);
             menu.findItem(R.id.menuLogout).setVisible(true);
+            menu.findItem(R.id.menuAddProduct).setVisible(true);
         } else {
             menu.findItem(R.id.menuLogout).setVisible(false);
+            menu.findItem(R.id.menuAddProduct).setVisible(false);
         }
         return true;
     }
@@ -92,6 +94,10 @@ public class MainActivity extends AppCompatActivity implements ProductListContra
             Intent intent = new Intent(this, LoginView.class);
             startActivity(intent);
             return true;
+        } else if(item.getItemId() == R.id.menuAddProduct){
+            Intent intent = new Intent(this, RegisterProductView.class);
+            intent.putExtra("username", username);
+            startActivity(intent);
         } else if(item.getItemId() == R.id.menuLogout){
             AlertDialog.Builder deleteDialog = new AlertDialog.Builder(this);
             deleteDialog.setMessage(R.string.confirmationMessage).setTitle(R.string.logoutMessage)

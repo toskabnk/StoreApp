@@ -17,6 +17,11 @@
     <string name="confirmationYes">Si</string>
     <string name="confirmationNo">No</string>
     <string name="logoutMessage">Cerrando Sesion</string>
+    <string name="registerProductName">Nombre:</string>
+    <string name="registerProductDescription">Descripcion:</string>
+    <string name="registerProductPrice">Precio:</string>
+    <string name="registerProductCategory">Categoria:</string>
+    <string name="registerButton">Registrar</string>
 
     <string name="reviewComment">Comentario:</string>
     <string name="reviewDate">Fecha:</string>
