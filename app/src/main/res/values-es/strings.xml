@@ -23,6 +23,9 @@
     <string name="registerProductCategory">Categoria:</string>
     <string name="registerButton">Registrar</string>
     <string name="editButton">Editar</string>
+    <string name="registerReviewProduct">Producto:</string>
+    <string name="registerReviewComment">Comentario:</string>
+    <string name="registerReviewRating">Calificacion:</string>
 
     <string name="reviewComment">Comentario:</string>
     <string name="reviewDate">Fecha:</string>

@@ -1,11 +1,15 @@
 package com.svalero.storeapp.view;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,6 +36,7 @@ public class ProductDetailsView extends AppCompatActivity implements ProductDeta
     private TextView tvDetails;
     private TextView tvPrice;
     private long productId;
+    private String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +44,7 @@ public class ProductDetailsView extends AppCompatActivity implements ProductDeta
         setContentView(R.layout.activity_product_details_view);
         Intent intentFrom = getIntent();
         productId = intentFrom.getLongExtra("productId", 0L);
+        username = intentFrom.getStringExtra("username");
         if(productId == 0L){
             return;
         }
@@ -51,6 +57,55 @@ public class ProductDetailsView extends AppCompatActivity implements ProductDeta
 
         reviewListPresenter = new ReviewListPresenter(this);
         initializeRecyclerView();
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        getMenuInflater().inflate(R.menu.user_menu, menu);
+        if(username != null){
+            menu.findItem(R.id.userMenu).setVisible(true);
+            menu.findItem(R.id.userMenu).setTitle(username);
+            menu.findItem(R.id.menuLogin).setVisible(false);
+            menu.findItem(R.id.menuLogout).setVisible(true);
+            menu.findItem(R.id.menuAddProduct).setVisible(false);
+            menu.findItem(R.id.menuAddReview).setVisible(true);
+        } else {
+            menu.findItem(R.id.menuLogout).setVisible(false);
+            menu.findItem(R.id.menuAddProduct).setVisible(false);
+            menu.findItem(R.id.menuAddReview).setVisible(false);
+        }
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if(item.getItemId() == R.id.menuLogin){
+            Intent intent = new Intent(this, LoginView.class);
+            startActivity(intent);
+            return true;
+        } else if(item.getItemId() == R.id.menuAddProduct){
+            Intent intent = new Intent(this, RegisterProductView.class);
+            intent.putExtra("username", username);
+            startActivity(intent);
+        } else if(item.getItemId() == R.id.menuAddReview){
+            Intent intent = new Intent(this, RegisterReviewView.class);
+            intent.putExtra("username", username);
+            intent.putExtra("idProduct", productId);
+            intent.putExtra("productName", product.getName());
+            startActivity(intent);
+        } else if(item.getItemId() == R.id.menuLogout){
+            AlertDialog.Builder deleteDialog = new AlertDialog.Builder(this);
+            deleteDialog.setMessage(R.string.confirmationMessage).setTitle(R.string.logoutMessage)
+                    .setPositiveButton(R.string.confirmationYes, (dialog, id) -> {
+                        Intent intent = new Intent(this, MainActivity.class);
+                        startActivity(intent);
+                    }).setNegativeButton(R.string.confirmationNo, (dialog, id) -> {
+                        dialog.dismiss();
+                    });
+            AlertDialog dialog = deleteDialog.create();
+            dialog.show();
+        }
+        return false;
     }
 
     private void initializeRecyclerView() {
@@ -69,6 +124,7 @@ public class ProductDetailsView extends AppCompatActivity implements ProductDeta
         tvName.setText(product.getName());
         tvDetails.setText(product.getDescription());
         tvPrice.setText(String.valueOf(product.getPrice()));
+        this.product = product;
     }
 
     @Override

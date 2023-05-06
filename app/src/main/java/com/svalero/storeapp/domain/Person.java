@@ -1,17 +1,18 @@
 package com.svalero.storeapp.domain;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class Person {
+public class Person implements Serializable {
     private long id;
     private String name;
     private String username;
     private String password;
     private String address;
     private String phoneNumber;
-    private LocalDate birthdate;
+    private String birthdate;
 
-    public Person(long id, String name, String username, String password, String address, String phoneNumber, LocalDate birthdate) {
+    public Person(long id, String name, String username, String password, String address, String phoneNumber, String birthdate) {
         this.id = id;
         this.name = name;
         this.username = username;
@@ -69,11 +70,11 @@ public class Person {
         this.phoneNumber = phoneNumber;
     }
 
-    public LocalDate getBirthdate() {
+    public String getBirthdate() {
         return birthdate;
     }
 
-    public void setBirthdate(LocalDate birthdate) {
+    public void setBirthdate(String birthdate) {
         this.birthdate = birthdate;
     }
 

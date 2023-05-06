@@ -1,7 +1,5 @@
 package com.svalero.storeapp.contract.product;
 
-import android.content.Context;
-
 import com.svalero.storeapp.domain.Product;
 
 public interface RegisterProductContract {

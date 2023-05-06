@@ -98,6 +98,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Superher
     private void seeProductDetails(int adapterPosition) {
         Product product = productList.get(adapterPosition);
         Intent intent = new Intent(context, ProductDetailsView.class);
+        String username = intentFrom.getStringExtra("username");
+        intent.putExtra("username", username);
         intent.putExtra("productId", product.getId());
         context.startActivity(intent);
     }
@@ -107,9 +109,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.Superher
         Intent intent = new Intent(context, RegisterProductView.class);
         String username = intentFrom.getStringExtra("username");
         Log.i("ProductAdapter" , "editProduct - " + username);
-        if(username == null){
-            username = "";
-        }
         intent.putExtra("username", username);
         intent.putExtra("editProduct", product);
         context.startActivity(intent);

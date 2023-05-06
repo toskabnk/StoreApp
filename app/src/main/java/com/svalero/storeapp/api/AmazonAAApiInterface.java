@@ -1,8 +1,10 @@
 package com.svalero.storeapp.api;
 
+import com.svalero.storeapp.domain.Person;
 import com.svalero.storeapp.domain.PersonLogin;
 import com.svalero.storeapp.domain.Product;
 import com.svalero.storeapp.domain.Review;
+import com.svalero.storeapp.domain.ReviewDTO;
 import com.svalero.storeapp.domain.Token;
 
 import java.util.List;
@@ -45,7 +47,7 @@ public interface AmazonAAApiInterface {
     Call<List<Review>> getReviewsByProduct(@Query("productId") long id);
 
     @POST("reviews")
-    Call<Review> addReview(@Body Review review);
+    Call<Review> addReview(@Body ReviewDTO review);
 
     @PUT("reviews/{id}")
     Call<Review> editReview(@Path("id")long id, @Body Review review);
@@ -55,4 +57,8 @@ public interface AmazonAAApiInterface {
 
     @POST("token")
     Call<Token> getToken(@Body PersonLogin personLogin);
+
+    //Person
+    @GET("persons")
+    Call<List<Person>> getPersonByUsername(@Query("username") String username);
 }

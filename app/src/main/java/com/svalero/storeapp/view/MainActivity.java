@@ -43,9 +43,6 @@ public class MainActivity extends AppCompatActivity implements ProductListContra
         Intent intentFrom = getIntent();
         username = intentFrom.getStringExtra("username");
         Log.i("MainActivity" , "onCreate - " + username);
-        if(username == null){
-            username = "";
-        }
 
         final StoreAppDatabase db = Room.databaseBuilder(this, StoreAppDatabase.class, DATABASE_NAME).allowMainThreadQueries().build();
         setUpPreferences(db);
@@ -75,15 +72,17 @@ public class MainActivity extends AppCompatActivity implements ProductListContra
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.main_menu, menu);
         getMenuInflater().inflate(R.menu.user_menu, menu);
-        if(!username.equals("")){
+        if(username != null){
             menu.findItem(R.id.userMenu).setVisible(true);
             menu.findItem(R.id.userMenu).setTitle(username);
             menu.findItem(R.id.menuLogin).setVisible(false);
             menu.findItem(R.id.menuLogout).setVisible(true);
             menu.findItem(R.id.menuAddProduct).setVisible(true);
+            menu.findItem(R.id.menuAddReview).setVisible(false);
         } else {
             menu.findItem(R.id.menuLogout).setVisible(false);
             menu.findItem(R.id.menuAddProduct).setVisible(false);
+            menu.findItem(R.id.menuAddReview).setVisible(false);
         }
         return true;
     }

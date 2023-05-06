@@ -63,9 +63,6 @@ public class RegisterProductView extends AppCompatActivity implements RegisterPr
         productEdit = (Product) intentFrom.getSerializableExtra("editProduct");
         Log.i("RegisterProductView" , "onCreate - Intent Username: " + username);
         Log.i("RegisterProductView", "onCreate - Intent Product: " + productEdit);
-        if(username == null){
-            username = "";
-        }
 
         if(productEdit != null){
             etName.setText(productEdit.getName());
