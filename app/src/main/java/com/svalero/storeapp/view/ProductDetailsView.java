@@ -56,7 +56,7 @@ public class ProductDetailsView extends AppCompatActivity implements ProductDeta
         presenter.loadProduct(productId);
 
         reviewListPresenter = new ReviewListPresenter(this);
-        initializeRecyclerView();
+        initializeRecyclerView(intentFrom);
     }
 
     public boolean onCreateOptionsMenu(Menu menu){
@@ -108,14 +108,14 @@ public class ProductDetailsView extends AppCompatActivity implements ProductDeta
         return false;
     }
 
-    private void initializeRecyclerView() {
+    private void initializeRecyclerView(Intent intentFrom) {
         reviewList = new ArrayList<>();
 
         RecyclerView recyclerView = findViewById(R.id.rvReviews);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
-        adapter = new ReviewAdapter(this, reviewList);
+        adapter = new ReviewAdapter(this, reviewList, intentFrom);
         recyclerView.setAdapter(adapter);
     }
 

@@ -20,15 +20,18 @@ import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import com.svalero.storeapp.R;
 import com.svalero.storeapp.contract.person.PersonDetailContract;
+import com.svalero.storeapp.contract.review.EditReviewContract;
 import com.svalero.storeapp.contract.review.RegisterReviewContract;
 import com.svalero.storeapp.db.StoreAppDatabase;
 import com.svalero.storeapp.domain.PersistData;
 import com.svalero.storeapp.domain.Person;
+import com.svalero.storeapp.domain.Review;
 import com.svalero.storeapp.domain.ReviewDTO;
 import com.svalero.storeapp.presenter.person.PersonDetailPresenter;
+import com.svalero.storeapp.presenter.review.EditReviewPresenter;
 import com.svalero.storeapp.presenter.review.RegisterReviewPresenter;
 
-public class RegisterReviewView extends AppCompatActivity implements RegisterReviewContract.View, PersonDetailContract.View {
+public class RegisterReviewView extends AppCompatActivity implements RegisterReviewContract.View, PersonDetailContract.View, EditReviewContract.View {
 
     private String username;
     private String productName;
@@ -42,6 +45,8 @@ public class RegisterReviewView extends AppCompatActivity implements RegisterRev
     private long personId;
     private PersonDetailPresenter personDetailPresenter;
     private RegisterReviewPresenter registerReviewPresenter;
+    private EditReviewPresenter editReviewPresenter;
+    private Review editReview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +57,7 @@ public class RegisterReviewView extends AppCompatActivity implements RegisterRev
         username = intentFrom.getStringExtra("username");
         idProduct = intentFrom.getLongExtra("idProduct", 0L);
         productName = intentFrom.getStringExtra("productName");
+        editReview = (Review) intentFrom.getSerializableExtra("editReview");
         Log.i("RegisterReviewView", "onCreate - Intent Username: " + username);
         Log.i("RegisterReviewView", "onCreate - Intent idProduct: " + idProduct);
         Log.i("RegisterReviewView", "onCreate - Intent productName: " + productName);
@@ -76,6 +82,15 @@ public class RegisterReviewView extends AppCompatActivity implements RegisterRev
         personDetailPresenter = new PersonDetailPresenter(this);
         registerReviewPresenter = new RegisterReviewPresenter(this);
 
+        if(editReview != null){
+            etComment.setText(editReview.getComment());
+            rbRating.setRating(editReview.getRating());
+            idProduct = editReview.getProductReview().getId();
+            personId = editReview.getCustomerReview().getId();
+            registerButton.setText(R.string.editButton);
+            editReviewPresenter = new EditReviewPresenter(this);
+        }
+
         tvProductName.setText(productName);
 
         if(username != null){
@@ -92,7 +107,6 @@ public class RegisterReviewView extends AppCompatActivity implements RegisterRev
     @Override
     public void showPerson(Person person) {
         registerButton.setEnabled(true);
-        Toast.makeText(this, "I got u", Toast.LENGTH_LONG).show();
         this.person = person;
         personId = person.getId();
         Log.i("RegisterReviewView", "showPerson - Person.getID: " + this.person.getId());
@@ -104,19 +118,27 @@ public class RegisterReviewView extends AppCompatActivity implements RegisterRev
         Intent intent = new Intent(this, ProductDetailsView.class);
         intent.putExtra("username", username);
         intent.putExtra("idProduct", idProduct);
-
+        startActivity(intent);
 
     }
 
     public void register(View view){
         String comment = etComment.getText().toString();
-        long personId = person.getId();
         float rating = rbRating.getRating();
-        ReviewDTO reviewDTO = new ReviewDTO(personId, idProduct, rating, comment);
 
         Log.i("RegisterReviewView", "register - personId: " + personId);
         Log.i("RegisterReviewView", "register - this.personId: " + this.personId);
 
-        registerReviewPresenter.registerReview(reviewDTO, persistData.getToken());
+        if(editReview != null){
+            Review review = new Review(editReview.getId(), null, null, rating, comment, null);
+            editReviewPresenter.editReview(review, persistData.getToken());
+
+        } else {
+            long personId = person.getId();
+
+            ReviewDTO reviewDTO = new ReviewDTO(personId, idProduct, rating, comment);
+
+            registerReviewPresenter.registerReview(reviewDTO, persistData.getToken());
+        }
     }
 }

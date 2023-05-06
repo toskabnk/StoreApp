@@ -1,6 +1,7 @@
 package com.svalero.storeapp.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.svalero.storeapp.R;
 import com.svalero.storeapp.domain.Review;
+import com.svalero.storeapp.view.RegisterReviewView;
 
 import java.util.List;
 
@@ -19,10 +21,12 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.SuperheroH
 
     private Context context;
     private List<Review> reviewList;
+    private Intent intentFrom;
 
-    public ReviewAdapter(Context context, List<Review> reviewList){
+    public ReviewAdapter(Context context, List<Review> reviewList, Intent intentFrom){
         this.reviewList = reviewList;
         this.context = context;
+        this.intentFrom = intentFrom;
     }
 
     @Override
@@ -62,6 +66,22 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.SuperheroH
             rating = view.findViewById(R.id.tvListReviewRating);
             editButton = view.findViewById(R.id.bListEdit);
             deleteButton = view.findViewById(R.id.bListDelete);
+
+            editButton.setOnClickListener(v -> editReview(getAdapterPosition()));
         }
+    }
+
+    private void editReview(int adapterPosition) {
+        Review review = reviewList.get(adapterPosition);
+        Intent intent = new Intent(context, RegisterReviewView.class);
+        String productName = review.getProductReview().getName();
+        long idProduct = review.getProductReview().getId();
+        String username = intentFrom.getStringExtra("username");
+
+        intent.putExtra("username", username);
+        intent.putExtra("editReview", review);
+        intent.putExtra("idProduct", idProduct);
+        intent.putExtra("productName", productName);
+        context.startActivity(intent);
     }
 }

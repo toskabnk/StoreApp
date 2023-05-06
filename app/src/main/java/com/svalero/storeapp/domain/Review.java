@@ -1,8 +1,9 @@
 package com.svalero.storeapp.domain;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class Review {
+public class Review implements Serializable {
     private long id;
     private Person customerReview;
     private Product productReview;
