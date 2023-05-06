@@ -7,26 +7,33 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.svalero.storeapp.R;
+import com.svalero.storeapp.contract.review.DeleteReviewContract;
 import com.svalero.storeapp.domain.Review;
+import com.svalero.storeapp.presenter.review.DeleteReviewPresenter;
 import com.svalero.storeapp.view.RegisterReviewView;
 
 import java.util.List;
 
-public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.SuperheroHolder> {
+public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.SuperheroHolder> implements DeleteReviewContract.View {
 
     private Context context;
     private List<Review> reviewList;
     private Intent intentFrom;
+    private DeleteReviewPresenter deleteReviewPresenter;
+    private String token;
 
-    public ReviewAdapter(Context context, List<Review> reviewList, Intent intentFrom){
+    public ReviewAdapter(Context context, List<Review> reviewList, Intent intentFrom, String token){
         this.reviewList = reviewList;
         this.context = context;
         this.intentFrom = intentFrom;
+        this.deleteReviewPresenter = new DeleteReviewPresenter(this);
+        this.token = token;
     }
 
     @Override
@@ -49,6 +56,20 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.SuperheroH
         return reviewList.size();
     }
 
+    public Context getContext() {
+        return context;
+    }
+
+    @Override
+    public void showError(String error) {
+        Toast.makeText(this.getContext(), error, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void showMessage(String message) {
+        Toast.makeText(this.getContext(), message, Toast.LENGTH_LONG).show();
+    }
+
     public class SuperheroHolder extends RecyclerView.ViewHolder {
         public TextView username;
         public TextView comment;
@@ -68,7 +89,16 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.SuperheroH
             deleteButton = view.findViewById(R.id.bListDelete);
 
             editButton.setOnClickListener(v -> editReview(getAdapterPosition()));
+            deleteButton.setOnClickListener(v -> deleteReview(getAdapterPosition()));
         }
+    }
+
+    private void deleteReview(int adapterPosition) {
+        Review review = reviewList.get(adapterPosition);
+        deleteReviewPresenter.deleteReview(token, review.getId());
+        reviewList.remove(adapterPosition);
+        notifyItemRemoved(adapterPosition);
+
     }
 
     private void editReview(int adapterPosition) {

@@ -1,13 +1,18 @@
 package com.svalero.storeapp.view;
 
+import static com.svalero.storeapp.util.Constants.DATABASE_NAME;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.database.sqlite.SQLiteConstraintException;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -17,6 +22,8 @@ import com.svalero.storeapp.R;
 import com.svalero.storeapp.adapter.ReviewAdapter;
 import com.svalero.storeapp.contract.product.ProductDetailsContract;
 import com.svalero.storeapp.contract.review.ReviewListContract;
+import com.svalero.storeapp.db.StoreAppDatabase;
+import com.svalero.storeapp.domain.PersistData;
 import com.svalero.storeapp.domain.Product;
 import com.svalero.storeapp.domain.Review;
 import com.svalero.storeapp.presenter.product.ProductDetailsPresenter;
@@ -37,6 +44,7 @@ public class ProductDetailsView extends AppCompatActivity implements ProductDeta
     private TextView tvPrice;
     private long productId;
     private String username;
+    private  PersistData persistData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +55,17 @@ public class ProductDetailsView extends AppCompatActivity implements ProductDeta
         username = intentFrom.getStringExtra("username");
         if(productId == 0L){
             return;
+        }
+
+        final StoreAppDatabase db = Room.databaseBuilder(this, StoreAppDatabase.class, DATABASE_NAME).allowMainThreadQueries().build();
+        persistData = new PersistData(0, "", "", "",false);
+        try{
+            persistData = db.getPersistDataDAO().getPersistData();
+        }   catch (SQLiteConstraintException sce) {
+            Log.i("RegisterProductView" , "onCreate - Error");
+            sce.printStackTrace();
+        } finally {
+            db.close();
         }
 
         presenter = new ProductDetailsPresenter(this);
@@ -115,7 +134,7 @@ public class ProductDetailsView extends AppCompatActivity implements ProductDeta
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
-        adapter = new ReviewAdapter(this, reviewList, intentFrom);
+        adapter = new ReviewAdapter(this, reviewList, intentFrom, persistData.getToken());
         recyclerView.setAdapter(adapter);
     }
 
