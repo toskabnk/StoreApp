@@ -15,58 +15,55 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.svalero.storeapp.R;
+import com.svalero.storeapp.adapter.FavouriteAdapter;
 import com.svalero.storeapp.adapter.ProductAdapter;
-import com.svalero.storeapp.contract.product.ProductListContract;
 import com.svalero.storeapp.db.StoreAppDatabase;
-import com.svalero.storeapp.domain.PersistData;
-import com.svalero.storeapp.domain.Product;
-import com.svalero.storeapp.presenter.product.ProductListPresenter;
+import com.svalero.storeapp.domain.Favourites;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements ProductListContract.View {
-    private List<Product> productList;
-    private ProductAdapter adapter;
-    private ProductListPresenter presenter;
-    private PersistData persistData;
-    String username;
+public class FavouritesView extends AppCompatActivity {
 
+    private String username;
+    private List<Favourites> favouritesList;
+    private FavouriteAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_favourites_view);
 
         Intent intentFrom = getIntent();
         username = intentFrom.getStringExtra("username");
         Log.i("MainActivity" , "onCreate - " + username);
-
-        final StoreAppDatabase db = Room.databaseBuilder(this, StoreAppDatabase.class, DATABASE_NAME).allowMainThreadQueries().build();
-        setUpPreferences(db);
-
-        presenter = new ProductListPresenter(this);
         initializeRecyclerView(intentFrom);
     }
 
-    private void setUpPreferences(StoreAppDatabase db) {
+    @Override
+    protected void onResume() {
+        super.onResume();
+        favouritesList.clear();
+        final StoreAppDatabase db = Room.databaseBuilder(this, StoreAppDatabase.class, DATABASE_NAME).allowMainThreadQueries().build();
         try {
-            persistData = db.getPersistDataDAO().getPersistData();
-            if(persistData != null){
-                Log.i("MainActivity" , "onCreate - Datos cargados!");
-                //TODO: Autologin
-            } else {
-                persistData = new PersistData(0,"","","", false);
-                db.getPersistDataDAO().insert(persistData);
-                Log.i("MainActivity" , "onCreate - Datos creados!");
-            }
-        }  catch (SQLiteConstraintException sce) {
-            Log.i("MainActivity" , "onCreate - Error");
+            favouritesList.addAll(db.getFavouriteDAO().getFavouritesByUsername(username));
+        }   catch (SQLiteConstraintException sce) {
+            Log.i("FavouritesView" , "onResume - Error");
         } finally {
             db.close();
         }
+    }
+
+    private void initializeRecyclerView(Intent intentFrom){
+        favouritesList = new ArrayList<>();
+
+        RecyclerView recyclerView = findViewById(R.id.rvFavourite);
+        recyclerView.setHasFixedSize(true);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        adapter = new FavouriteAdapter(this, favouritesList, intentFrom);
+        recyclerView.setAdapter(adapter);
     }
 
     public boolean onCreateOptionsMenu(Menu menu){
@@ -118,33 +115,5 @@ public class MainActivity extends AppCompatActivity implements ProductListContra
             startActivity(intent);
         }
         return false;
-    }
-
-    private void initializeRecyclerView(Intent intentFrom){
-        productList = new ArrayList<>();
-
-        RecyclerView recyclerView = findViewById(R.id.rvListProducts);
-        recyclerView.setHasFixedSize(true);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(linearLayoutManager);
-        adapter = new ProductAdapter(this, productList, intentFrom, persistData.getToken());
-        recyclerView.setAdapter(adapter);
-    }
-
-    protected void onResume(){
-        super.onResume();
-        presenter.loadAllProducts();
-    }
-
-    @Override
-    public void showProducts(List<Product> productList) {
-        this.productList.clear();
-        this.productList.addAll(productList);
-        adapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public void showMessage(String name) {
-        Toast.makeText(this, name, Toast.LENGTH_LONG).show();
     }
 }

@@ -14,4 +14,7 @@
     <item
         android:id="@+id/menuAddReview"
         android:title="Añadir Review" />
+    <item
+        android:id="@+id/menuFavourite"
+        android:title="@string/favourite" />
 </menu>

@@ -25,6 +25,7 @@
     <string name="registerReviewProduct">Product:</string>
     <string name="registerReviewComment">Comment:</string>
     <string name="registerReviewRating">Rating:</string>
+    <string name="favourite">Favourite</string>
 
     <string name="reviewComment">Comment:</string>
     <string name="reviewDate">Date:</string>
