@@ -1,5 +1,7 @@
 package com.svalero.storeapp.api;
 
+import com.svalero.storeapp.domain.Inventory;
+import com.svalero.storeapp.domain.InventoryMapDTO;
 import com.svalero.storeapp.domain.Person;
 import com.svalero.storeapp.domain.PersonLogin;
 import com.svalero.storeapp.domain.Product;
@@ -61,4 +63,11 @@ public interface AmazonAAApiInterface {
     //Person
     @GET("persons")
     Call<List<Person>> getPersonByUsername(@Query("username") String username);
+
+    //Inventory
+    @GET("inventories")
+    Call<List<Inventory>> getAllInventories();
+
+    @POST("inventories/{id}/waypoint")
+    Call<Inventory> addWaypoint(@Path("id")long id, @Body InventoryMapDTO inventoryMapDTO);
 }

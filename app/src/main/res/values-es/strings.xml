@@ -27,6 +27,14 @@
     <string name="registerReviewComment">Comentario:</string>
     <string name="registerReviewRating">Calificacion:</string>
     <string name="favourite">Favorito</string>
+    <string name="inventoryLocation">Ubicación:</string>
+    <string name="inventoryAddress">Direccion:</string>
+    <string name="inventoryTotalValue">Valor Total:</string>
+    <string name="inventoryAddMap">Añadir ubicación</string>
+    <string name="inventorySeeMap">Ver ubicación</string>
+    <string name="mapSave">Guardar</string>
+    <string name="mapDelete">Reinciar</string>
+    <string name="mapMessage">Porfavor, selecciona un punto en el mapa</string>
 
     <string name="reviewComment">Comentario:</string>
     <string name="reviewDate">Fecha:</string>

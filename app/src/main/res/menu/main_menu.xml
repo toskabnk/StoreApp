@@ -17,4 +17,7 @@
     <item
         android:id="@+id/menuFavourite"
         android:title="@string/favourite" />
+    <item
+        android:id="@+id/menuInventories"
+        android:title="Inventories" />
 </menu>

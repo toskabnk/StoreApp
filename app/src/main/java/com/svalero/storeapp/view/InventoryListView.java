@@ -18,55 +18,51 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.svalero.storeapp.R;
+import com.svalero.storeapp.adapter.InventoryAdapter;
 import com.svalero.storeapp.adapter.ProductAdapter;
-import com.svalero.storeapp.contract.product.ProductListContract;
+import com.svalero.storeapp.contract.inventory.InventoryListContract;
 import com.svalero.storeapp.db.StoreAppDatabase;
+import com.svalero.storeapp.domain.Inventory;
 import com.svalero.storeapp.domain.PersistData;
-import com.svalero.storeapp.domain.Product;
-import com.svalero.storeapp.presenter.product.ProductListPresenter;
+import com.svalero.storeapp.presenter.inventory.InventoryListPresenter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements ProductListContract.View {
-    private List<Product> productList;
-    private ProductAdapter adapter;
-    private ProductListPresenter presenter;
+public class InventoryListView extends AppCompatActivity implements InventoryListContract.View {
+    private InventoryListPresenter inventoryListPresenter;
     private PersistData persistData;
-    String username;
+    private String username;
+    private List<Inventory> inventoryList;
+    private InventoryAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_inventory_list_view);
 
         Intent intentFrom = getIntent();
         username = intentFrom.getStringExtra("username");
-        Log.i("MainActivity" , "onCreate - " + username);
 
         final StoreAppDatabase db = Room.databaseBuilder(this, StoreAppDatabase.class, DATABASE_NAME).allowMainThreadQueries().build();
-        setUpPreferences(db);
-
-        presenter = new ProductListPresenter(this);
-        initializeRecyclerView(intentFrom);
-    }
-
-    private void setUpPreferences(StoreAppDatabase db) {
-        try {
+        persistData = new PersistData(0, "", "", "",false);
+        try{
             persistData = db.getPersistDataDAO().getPersistData();
-            if(persistData != null){
-                Log.i("MainActivity" , "onCreate - Datos cargados!");
-                //TODO: Autologin
-            } else {
-                persistData = new PersistData(0,"","","", false);
-                db.getPersistDataDAO().insert(persistData);
-                Log.i("MainActivity" , "onCreate - Datos creados!");
-            }
-        }  catch (SQLiteConstraintException sce) {
-            Log.i("MainActivity" , "onCreate - Error");
+        }   catch (SQLiteConstraintException sce) {
+            Log.i("InventoryListView" , "onCreate - Error");
+            sce.printStackTrace();
         } finally {
             db.close();
         }
+
+        inventoryListPresenter = new InventoryListPresenter(this);
+        initializeRecyclerView(intentFrom);
+    }
+
+    protected void onResume(){
+        super.onResume();
+        inventoryListPresenter.loadAllInventories(persistData.getToken());
+        adapter.notifyDataSetChanged();
     }
 
     public boolean onCreateOptionsMenu(Menu menu){
@@ -88,7 +84,6 @@ public class MainActivity extends AppCompatActivity implements ProductListContra
             menu.findItem(R.id.menuAddReview).setVisible(false);
             menu.findItem(R.id.menuFavourite).setVisible(false);
             menu.findItem(R.id.menuInventories).setVisible(false);
-
 
         }
         return true;
@@ -119,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements ProductListContra
             Intent intent = new Intent(this, FavouritesView.class);
             intent.putExtra("username", username);
             startActivity(intent);
-        }    else if(item.getItemId() == R.id.menuInventories){
+        }   else if(item.getItemId() == R.id.menuInventories){
             Intent intent = new Intent(this, InventoryListView.class);
             intent.putExtra("username", username);
             startActivity(intent);
@@ -127,31 +122,27 @@ public class MainActivity extends AppCompatActivity implements ProductListContra
         return false;
     }
 
-    private void initializeRecyclerView(Intent intentFrom){
-        productList = new ArrayList<>();
-
-        RecyclerView recyclerView = findViewById(R.id.rvListProducts);
-        recyclerView.setHasFixedSize(true);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(linearLayoutManager);
-        adapter = new ProductAdapter(this, productList, intentFrom, persistData.getToken());
-        recyclerView.setAdapter(adapter);
-    }
-
-    protected void onResume(){
-        super.onResume();
-        presenter.loadAllProducts();
-    }
-
     @Override
-    public void showProducts(List<Product> productList) {
-        this.productList.clear();
-        this.productList.addAll(productList);
+    public void showInventories(List<Inventory> inventoryList) {
+        this.inventoryList.clear();
+        this.inventoryList.addAll(inventoryList);
         adapter.notifyDataSetChanged();
     }
 
     @Override
-    public void showMessage(String name) {
-        Toast.makeText(this, name, Toast.LENGTH_LONG).show();
+    public void showError(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+    }
+
+    private void initializeRecyclerView(Intent intentFrom){
+        inventoryList = new ArrayList<>();
+
+        RecyclerView recyclerView = findViewById(R.id.rvInventories);
+        recyclerView.setHasFixedSize(true);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        adapter = new InventoryAdapter(this, inventoryList, intentFrom, persistData.getToken());
+
+        recyclerView.setAdapter(adapter);
     }
 }

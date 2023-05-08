@@ -16,6 +16,15 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".view.SeeMapView"
+            android:exported="false" />
+        <activity
+            android:name=".view.SelectMapView"
+            android:exported="false" />
+        <activity
+            android:name=".view.InventoryListView"
+            android:exported="false" />
+        <activity
             android:name=".view.FavouritesView"
             android:exported="false" />
         <activity

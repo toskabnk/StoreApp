@@ -94,11 +94,13 @@ public class ProductDetailsView extends AppCompatActivity implements ProductDeta
             menu.findItem(R.id.menuAddProduct).setVisible(false);
             menu.findItem(R.id.menuAddReview).setVisible(true);
             menu.findItem(R.id.menuFavourite).setVisible(true);
+            menu.findItem(R.id.menuInventories).setVisible(true);
         } else {
             menu.findItem(R.id.menuLogout).setVisible(false);
             menu.findItem(R.id.menuAddProduct).setVisible(false);
             menu.findItem(R.id.menuAddReview).setVisible(false);
             menu.findItem(R.id.menuFavourite).setVisible(false);
+            menu.findItem(R.id.menuInventories).setVisible(false);
         }
         return true;
     }
@@ -130,8 +132,12 @@ public class ProductDetailsView extends AppCompatActivity implements ProductDeta
                     });
             AlertDialog dialog = deleteDialog.create();
             dialog.show();
-        }   else if(item.getItemId() == R.id.menuFavourite){
+        } else if(item.getItemId() == R.id.menuFavourite){
             Intent intent = new Intent(this, FavouritesView.class);
+            intent.putExtra("username", username);
+            startActivity(intent);
+        } else if(item.getItemId() == R.id.menuInventories){
+            Intent intent = new Intent(this, InventoryListView.class);
             intent.putExtra("username", username);
             startActivity(intent);
         }

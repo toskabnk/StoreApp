@@ -26,6 +26,15 @@
     <string name="registerReviewComment">Comment:</string>
     <string name="registerReviewRating">Rating:</string>
     <string name="favourite">Favourite</string>
+    <string name="inventoryLocation">Location:</string>
+    <string name="inventoryAddress">Address:</string>
+    <string name="inventoryTotalValue">Total Value:</string>
+    <string name="inventoryAddMap">Add Map Location</string>
+    <string name="inventorySeeMap">See Map Location</string>
+    <string name="mapSave">Save</string>
+    <string name="mapDelete">Reset</string>
+    <string name="mapMessage">Please, select a point in the map</string>
+
 
     <string name="reviewComment">Comment:</string>
     <string name="reviewDate">Date:</string>
