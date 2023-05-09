@@ -20,16 +20,24 @@
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent">
 
         <Button
             android:id="@+id/bDetailMapBack"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="getRoute"
+            android:text="@string/mapRoute" />
+
+        <Button
+            android:id="@+id/bDetailMapRoute"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="back"
-            android:text="back" />
+            android:text="@string/backButton" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -23,8 +23,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_9
+        targetCompatibility JavaVersion.VERSION_1_9
     }
     buildFeatures {
         viewBinding true
@@ -48,5 +48,7 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
     //Mapbox
     implementation 'com.mapbox.maps:android:10.10.0'
+    implementation 'com.mapbox.navigation:core:2.11.0'
+    implementation 'com.mapbox.navigation:android:2.11.0'
     implementation 'com.google.android.gms:play-services-location:21.0.1'
 }

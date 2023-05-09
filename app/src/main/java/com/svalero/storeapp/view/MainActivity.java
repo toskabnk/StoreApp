@@ -4,12 +4,16 @@ import static com.svalero.storeapp.util.Constants.DATABASE_NAME;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteConstraintException;
 import android.os.Bundle;
 import android.util.Log;
@@ -39,6 +43,8 @@ public class MainActivity extends AppCompatActivity implements ProductListContra
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        checkLocationPermission();
 
         Intent intentFrom = getIntent();
         username = intentFrom.getStringExtra("username");
@@ -153,5 +159,16 @@ public class MainActivity extends AppCompatActivity implements ProductListContra
     @Override
     public void showMessage(String name) {
         Toast.makeText(this, name, Toast.LENGTH_LONG).show();
+    }
+
+    private void checkLocationPermission() {
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
+            } else {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1000);
+            }
+        }
+
     }
 }
