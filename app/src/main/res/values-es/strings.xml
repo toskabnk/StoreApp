@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">StoreApp</string>
+    <string name="productDetails">Detalles</string>
+    <string name="productEdit">Editar</string>
+    <string name="productDelete">Eliminar</string>
+    <string name="productDetailsDescription">Descripcion:</string>
+    <string name="productDetailsPrice">Precio:</string>
+    <string name="productDetailsReviews">Reseñas:</string>
+    <string name="loginUsername">Nombre de Usuario:</string>
+    <string name="loginPassword">Contraseña:</string>
+    <string name="loginForgot">No recuerdo la contraseña</string>
+    <string name="loginButton">Login</string>
+    <string name="backButton">Volver</string>
+    <string name="loginMenu">Login</string>
+    <string name="confirmationMessage">Estas seguro?</string>
+    <string name="confirmationYes">Si</string>
+    <string name="confirmationNo">No</string>
+    <string name="logoutMessage">Cerrando Sesion</string>
+    <string name="registerProductName">Nombre:</string>
+    <string name="registerProductDescription">Descripcion:</string>
+    <string name="registerProductPrice">Precio:</string>
+    <string name="registerProductCategory">Categoria:</string>
+    <string name="registerButton">Registrar</string>
+    <string name="editButton">Editar</string>
+    <string name="registerReviewProduct">Producto:</string>
+    <string name="registerReviewComment">Comentario:</string>
+    <string name="registerReviewRating">Calificacion:</string>
+    <string name="favourite">Favorito</string>
+    <string name="inventoryLocation">Ubicación:</string>
+    <string name="inventoryAddress">Direccion:</string>
+    <string name="inventoryTotalValue">Valor Total:</string>
+    <string name="inventoryAddMap">Añadir ubicación</string>
+    <string name="inventorySeeMap">Ver ubicación</string>
+    <string name="mapSave">Guardar</string>
+    <string name="mapDelete">Reinciar</string>
+    <string name="mapMessage">Porfavor, selecciona un punto en el mapa</string>
+    <string name="mapRoute">Calcular Ruta</string>
+    <string name="search">Buscar producto</string>
+    <string name="preferences1">Recordarme</string>
+    <string name="preferences2">Centrar mapa en mi</string>
+    <string name="preferences3">Favoritos por defecto</string>
+    <string name="settingsSaved">Preferencias guardadas!</string>
+    <string name="settingsError">Error al guardar las preferencias!</string>
+
+
+    <string name="reviewComment">Comentario:</string>
+    <string name="reviewDate">Fecha:</string>
+    <string name="reviewRating">Puntuacion:</string>
+    <string name="reviewUsername">Por:</string>
+    <string name="a"></string>
+</resources>
