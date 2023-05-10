@@ -36,6 +36,7 @@
     <string name="mapDelete">Reinciar</string>
     <string name="mapMessage">Porfavor, selecciona un punto en el mapa</string>
     <string name="mapRoute">Calcular Ruta</string>
+    <string name="search">Buscar producto</string>
 
     <string name="reviewComment">Comentario:</string>
     <string name="reviewDate">Fecha:</string>

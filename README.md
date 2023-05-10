@@ -24,7 +24,7 @@
 - [x] Utiliza la herramienta Git (y GitHub) durante todo el desarrollo de la aplicación. Utiliza el gestor de Issues para los problemas/fallos que vayan surgiendo
 - [ ] Añadir un menú de preferencias con al menos 3 opciones que modifiquen el comportamiento de la aplicación. Este menú estará siempre disponible en el ActionBar
 - [ ] Hacer uso de mapas en las pantalla donde se registre información. Para indicar información geográfica, por ejemplo
-- [ ] El usuario podrá hacer búsquedas para filtrar la información en los listados de datos
+- [x] El usuario podrá hacer búsquedas para filtrar la información en los listados de datos
 - [ ] Diseñar al menos 3 layouts para otras posiciones de la pantalla (portrait/ landscape)
 - [x] Utilizar Material Design para personalizar el diseño de la aplicación
 - [x] Utilizar las credenciales de usuario en la aplicación para comunicarse con la API (si ésta se encuentra securizada con token JWT)

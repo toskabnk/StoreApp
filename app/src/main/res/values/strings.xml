@@ -35,6 +35,7 @@
     <string name="mapDelete">Reset</string>
     <string name="mapMessage">Please, select a point in the map</string>
     <string name="mapRoute">Calculate Route</string>
+    <string name="search">Search product</string>
 
 
     <string name="reviewComment">Comment:</string>

@@ -12,13 +12,22 @@ import androidx.room.Room;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteConstraintException;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethod;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.svalero.storeapp.R;
@@ -34,9 +43,11 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements ProductListContract.View {
     private List<Product> productList;
+    private List<Product> productListFull;
     private ProductAdapter adapter;
     private ProductListPresenter presenter;
     private PersistData persistData;
+    private EditText etsearch;
     String username;
 
     @Override
@@ -54,6 +65,40 @@ public class MainActivity extends AppCompatActivity implements ProductListContra
         setUpPreferences(db);
 
         presenter = new ProductListPresenter(this);
+
+        etsearch  = findViewById(R.id.etSearch);
+        etsearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                productList.clear();
+                productList.addAll(productListFull);
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                adapter.getFilter().filter(charSequence.toString().toLowerCase());
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        etsearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                if (i == EditorInfo.IME_ACTION_SEARCH) {
+                    InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    inputMethodManager.hideSoftInputFromWindow(etsearch.getWindowToken(), 0);
+                    etsearch.setText("");
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        });
+
         initializeRecyclerView(intentFrom);
     }
 
@@ -135,6 +180,7 @@ public class MainActivity extends AppCompatActivity implements ProductListContra
 
     private void initializeRecyclerView(Intent intentFrom){
         productList = new ArrayList<>();
+        productListFull = new ArrayList<>();
 
         RecyclerView recyclerView = findViewById(R.id.rvListProducts);
         recyclerView.setHasFixedSize(true);
@@ -153,6 +199,7 @@ public class MainActivity extends AppCompatActivity implements ProductListContra
     public void showProducts(List<Product> productList) {
         this.productList.clear();
         this.productList.addAll(productList);
+        productListFull.addAll(productList);
         adapter.notifyDataSetChanged();
     }
 
