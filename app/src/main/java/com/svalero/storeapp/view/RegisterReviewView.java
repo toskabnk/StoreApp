@@ -63,7 +63,7 @@ public class RegisterReviewView extends AppCompatActivity implements RegisterRev
         Log.i("RegisterReviewView", "onCreate - Intent productName: " + productName);
 
         final StoreAppDatabase db = Room.databaseBuilder(this, StoreAppDatabase.class, DATABASE_NAME).allowMainThreadQueries().build();
-        persistData = new PersistData(0, "", "", "",false);
+        persistData = new PersistData(0, "", "", "",false, false ,false);
         try{
             persistData = db.getPersistDataDAO().getPersistData();
         }   catch (SQLiteConstraintException sce) {

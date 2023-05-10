@@ -12,13 +12,17 @@ public class PersistData {
     private String password;
     private String token;
     private boolean rememberMe;
+    private boolean centerOnMe;
+    private boolean favDefault;
 
-    public PersistData(long id, String username, String password, String token, boolean rememberMe) {
+    public PersistData(long id, String username, String password, String token, boolean rememberMe, boolean centerOnMe, boolean favDefault) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.token = token;
         this.rememberMe = rememberMe;
+        this.centerOnMe = centerOnMe;
+        this.favDefault = favDefault;
     }
 
     public long getId() {
@@ -59,5 +63,34 @@ public class PersistData {
 
     public void setRememberMe(boolean rememberMe) {
         this.rememberMe = rememberMe;
+    }
+
+    public boolean isCenterOnMe() {
+        return centerOnMe;
+    }
+
+    public void setCenterOnMe(boolean centerOnMe) {
+        this.centerOnMe = centerOnMe;
+    }
+
+    public boolean isFavDefault() {
+        return favDefault;
+    }
+
+    public void setFavDefault(boolean favDefault) {
+        this.favDefault = favDefault;
+    }
+
+    @Override
+    public String toString() {
+        return "PersistData{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", token='" + token + '\'' +
+                ", rememberMe=" + rememberMe +
+                ", centerOnMe=" + centerOnMe +
+                ", favDefault=" + favDefault +
+                '}';
     }
 }

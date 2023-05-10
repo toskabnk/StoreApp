@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.svalero.storeapp.R;
 import com.svalero.storeapp.adapter.FavouriteAdapter;
@@ -115,5 +116,11 @@ public class FavouritesView extends AppCompatActivity {
             startActivity(intent);
         }
         return false;
+    }
+
+    public void back(View view){
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra("username", username);
+        startActivity(intent);
     }
 }

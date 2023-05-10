@@ -37,6 +37,12 @@
     <string name="mapMessage">Porfavor, selecciona un punto en el mapa</string>
     <string name="mapRoute">Calcular Ruta</string>
     <string name="search">Buscar producto</string>
+    <string name="preferences1">Recordarme</string>
+    <string name="preferences2">Centrar mapa en mi</string>
+    <string name="preferences3">Favoritos por defecto</string>
+    <string name="settingsSaved">Preferencias guardadas!</string>
+    <string name="settingsError">Error al guardar las preferencias!</string>
+
 
     <string name="reviewComment">Comentario:</string>
     <string name="reviewDate">Fecha:</string>

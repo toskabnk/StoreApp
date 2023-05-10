@@ -10,6 +10,7 @@ import android.database.sqlite.SQLiteConstraintException;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -29,6 +30,7 @@ public class LoginView extends AppCompatActivity implements TokenContract.View {
     private EditText etUsernmae;
     private EditText etPassword;
     private TokenPresenter presenter;
+    private Button loginButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,8 +39,26 @@ public class LoginView extends AppCompatActivity implements TokenContract.View {
 
         etUsernmae = findViewById(R.id.etLoginUsername);
         etPassword = findViewById(R.id.etLoginPassword);
+        loginButton = findViewById(R.id.button);
 
         presenter = new TokenPresenter(this);
+
+        final StoreAppDatabase db = Room.databaseBuilder(this, StoreAppDatabase.class, DATABASE_NAME).allowMainThreadQueries().build();
+        persistData = new PersistData(0, "", "", "",false, false ,false);
+        try{
+            persistData = db.getPersistDataDAO().getPersistData();
+            if(persistData.isRememberMe()){
+                etUsernmae.setText(persistData.getUsername());
+                etPassword.setText(persistData.getPassword());
+                login(loginButton);
+            }
+        }   catch (SQLiteConstraintException sce) {
+            Log.i("InventoryListView" , "onCreate - Error");
+            sce.printStackTrace();
+        } finally {
+            db.close();
+        }
+
     }
 
     @Override
@@ -50,25 +70,37 @@ public class LoginView extends AppCompatActivity implements TokenContract.View {
     public void showToken(Token token) {
         if(token != null) {
             final StoreAppDatabase db = Room.databaseBuilder(this, StoreAppDatabase.class, DATABASE_NAME).allowMainThreadQueries().build();
-
+            persistData = new PersistData(0, "", "", "",false, false ,false);
             try {
                 persistData = db.getPersistDataDAO().getPersistData();
                 persistData.setToken(token.getToken());
+                persistData.setPassword(etPassword.getText().toString());
+                persistData.setUsername(etUsernmae.getText().toString());
                 db.getPersistDataDAO().update(persistData);
+
             } catch (SQLiteConstraintException sce) {
                 Log.i("LoginView - showToken", "Algo ha ocurrido malo");
-                Snackbar.make(this.getCurrentFocus(), "Algo ha ocurrido malo", BaseTransientBottomBar.LENGTH_LONG).show();
+                Snackbar.make(loginButton, "Algo ha ocurrido malo", BaseTransientBottomBar.LENGTH_LONG).show();
             } finally {
                 db.close();
             }
             Log.i("LoginView - showToken", "Token guardado!");
             Log.i("LoginView - showToken", token.getToken());
-            Snackbar.make(this.getCurrentFocus(), "Login Correcto", BaseTransientBottomBar.LENGTH_LONG).show();
-            Intent intent = new Intent(LoginView.this, MainActivity.class);
-            intent.putExtra("username", token.getUsername());
-            startActivity(intent);
+            Log.i("LoginView - showToken", persistData.toString());
+            Snackbar.make(loginButton, "Login Correcto", BaseTransientBottomBar.LENGTH_LONG).show();
+            if(persistData.isFavDefault()){
+                Log.i("LoginView - showToken", "Favoritos");
+                Intent intentFav = new Intent(LoginView.this, FavouritesView.class);
+                intentFav.putExtra("username", token.getUsername());
+                startActivity(intentFav);
+            } else {
+                Intent intent = new Intent(LoginView.this, MainActivity.class);
+                intent.putExtra("username", token.getUsername());
+                startActivity(intent);
+            }
+
         } else {
-            Snackbar.make(this.getCurrentFocus(), "Login Incorrecto", BaseTransientBottomBar.LENGTH_LONG).show();
+            Snackbar.make(loginButton, "Login Incorrecto", BaseTransientBottomBar.LENGTH_LONG).show();
         }
     }
 

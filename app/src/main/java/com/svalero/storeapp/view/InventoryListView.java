@@ -45,7 +45,7 @@ public class InventoryListView extends AppCompatActivity implements InventoryLis
         username = intentFrom.getStringExtra("username");
 
         final StoreAppDatabase db = Room.databaseBuilder(this, StoreAppDatabase.class, DATABASE_NAME).allowMainThreadQueries().build();
-        persistData = new PersistData(0, "", "", "",false);
+        persistData = new PersistData(0, "", "", "",false, false ,false);
         try{
             persistData = db.getPersistDataDAO().getPersistData();
         }   catch (SQLiteConstraintException sce) {
@@ -77,6 +77,7 @@ public class InventoryListView extends AppCompatActivity implements InventoryLis
             menu.findItem(R.id.menuAddReview).setVisible(false);
             menu.findItem(R.id.menuFavourite).setVisible(true);
             menu.findItem(R.id.menuInventories).setVisible(true);
+            menu.findItem(R.id.menuPreferences).setVisible(true);
 
         } else {
             menu.findItem(R.id.menuLogout).setVisible(false);
@@ -84,6 +85,7 @@ public class InventoryListView extends AppCompatActivity implements InventoryLis
             menu.findItem(R.id.menuAddReview).setVisible(false);
             menu.findItem(R.id.menuFavourite).setVisible(false);
             menu.findItem(R.id.menuInventories).setVisible(false);
+            menu.findItem(R.id.menuPreferences).setVisible(false);
 
         }
         return true;
@@ -114,8 +116,12 @@ public class InventoryListView extends AppCompatActivity implements InventoryLis
             Intent intent = new Intent(this, FavouritesView.class);
             intent.putExtra("username", username);
             startActivity(intent);
-        }   else if(item.getItemId() == R.id.menuInventories){
+        } else if(item.getItemId() == R.id.menuInventories){
             Intent intent = new Intent(this, InventoryListView.class);
+            intent.putExtra("username", username);
+            startActivity(intent);
+        } else if(item.getItemId() == R.id.menuPreferences){
+            Intent intent = new Intent(this, Preferences.class);
             intent.putExtra("username", username);
             startActivity(intent);
         }

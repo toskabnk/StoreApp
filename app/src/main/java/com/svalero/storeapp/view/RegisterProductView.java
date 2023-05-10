@@ -42,8 +42,7 @@ public class RegisterProductView extends AppCompatActivity implements RegisterPr
         setContentView(R.layout.activity_register_product_view);
 
         final StoreAppDatabase db = Room.databaseBuilder(this, StoreAppDatabase.class, DATABASE_NAME).allowMainThreadQueries().build();
-        persistData = new PersistData(0, "", "", "",false);
-        try{
+        persistData = new PersistData(0, "", "", "",false, false ,false);        try{
             persistData = db.getPersistDataDAO().getPersistData();
         }   catch (SQLiteConstraintException sce) {
             Log.i("RegisterProductView" , "onCreate - Error");

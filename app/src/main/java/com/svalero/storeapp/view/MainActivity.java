@@ -109,8 +109,7 @@ public class MainActivity extends AppCompatActivity implements ProductListContra
                 Log.i("MainActivity" , "onCreate - Datos cargados!");
                 //TODO: Autologin
             } else {
-                persistData = new PersistData(0,"","","", false);
-                db.getPersistDataDAO().insert(persistData);
+                persistData = new PersistData(0, "", "", "",false, false ,false);                db.getPersistDataDAO().insert(persistData);
                 Log.i("MainActivity" , "onCreate - Datos creados!");
             }
         }  catch (SQLiteConstraintException sce) {
@@ -132,6 +131,7 @@ public class MainActivity extends AppCompatActivity implements ProductListContra
             menu.findItem(R.id.menuAddReview).setVisible(false);
             menu.findItem(R.id.menuFavourite).setVisible(true);
             menu.findItem(R.id.menuInventories).setVisible(true);
+            menu.findItem(R.id.menuPreferences).setVisible(true);
 
         } else {
             menu.findItem(R.id.menuLogout).setVisible(false);
@@ -139,6 +139,7 @@ public class MainActivity extends AppCompatActivity implements ProductListContra
             menu.findItem(R.id.menuAddReview).setVisible(false);
             menu.findItem(R.id.menuFavourite).setVisible(false);
             menu.findItem(R.id.menuInventories).setVisible(false);
+            menu.findItem(R.id.menuPreferences).setVisible(false);
 
 
         }
@@ -166,12 +167,16 @@ public class MainActivity extends AppCompatActivity implements ProductListContra
                     });
             AlertDialog dialog = deleteDialog.create();
             dialog.show();
-        }  else if(item.getItemId() == R.id.menuFavourite){
+        } else if(item.getItemId() == R.id.menuFavourite){
             Intent intent = new Intent(this, FavouritesView.class);
             intent.putExtra("username", username);
             startActivity(intent);
-        }    else if(item.getItemId() == R.id.menuInventories){
+        } else if(item.getItemId() == R.id.menuInventories){
             Intent intent = new Intent(this, InventoryListView.class);
+            intent.putExtra("username", username);
+            startActivity(intent);
+        }  else if(item.getItemId() == R.id.menuPreferences){
+            Intent intent = new Intent(this, Preferences.class);
             intent.putExtra("username", username);
             startActivity(intent);
         }
